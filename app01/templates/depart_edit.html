@@ -1,0 +1,22 @@
+{% extends 'header.html' %}
+
+{% block content %}
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+      编辑部门
+    </div>
+    <div class="panel-body">
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+              <label>名称</label>
+              <input type="text" class="form-control" placeholder="名称" name="title" value="{{ result.title }}"/>
+            </div>
+            <button type="submit" class="btn btn-primary">提 交</button>
+        </form>
+    </div>
+  </div>
+</div>
+{% endblock%}
