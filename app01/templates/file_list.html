@@ -1,0 +1,91 @@
+{% extends 'header.html' %}
+{% load static %}
+{% block content %}
+    <div class="container">
+        <div style="margin-bottom:10px;">
+            <a class="btn btn-success" href="#" data-toggle="modal" data-target="#fileUploadModal">
+              <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+              上传文件
+            </a>
+
+            <!-- 模态框 -->
+            <div class="modal fade" id="fileUploadModal" tabindex="-1" role="dialog" aria-labelledby="fileUploadModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="fileUploadModalLabel">上传文件</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <form action="/file/upload/" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                      <div class="form-group">
+                        <label for="fileToUpload">选择文件</label>
+                        <input type="file" name="file" class="form-control-file" id="fileToUpload">
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                      <button type="submit" class="btn btn-primary">上传</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <div style="float:right;width:300px;">
+              <form method="get">
+                <div class="input-group">
+                    <input type="text" name="q" class="form-control" placeholder="搜索" value="">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="submit">
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                      </button>
+                    </span>
+                </div>
+              </form>
+            </div>
+          </div>
+            <div class="panel panel-default">
+            <div class="panel-heading">
+              <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+              文件列表
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>序号</th>
+                    <th>文件名</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for key,value in dataList.items  %}
+                  <tr>
+                    <td>{{key}}</td>
+                    <td>{{value}}</td>
+                    <td>
+                      <a class="btn btn-primary btn-xs" href="/file/{{value}}/download/" download>下载</a>
+                      <a class="btn btn-danger btn-xs" href="/file/{{value}}/delete/">删除</a>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+          </div>
+          <div class="clearfix">
+            <ul class="pagination">
+              <li><a href="?page=1">首页</a></li><li><a href="?page=1">上一页</a></li><li class="active"><a href="?page=1">1</a></li><li><a href="?page=1">下一页</a></li><li><a href="?page=1">尾页</a></li>
+                <li>
+                    <form style="float:left;margin-left:-1px" method="get">
+                      <input name="page" style="position:relative;float:left;display:inline-block;width:80px;border-radius:0;" type="text" class="form-control" placeholder="页码">
+                      <button style="border-radius:0;" class="btn btn-default" type="submit">跳转</button>
+                    </form>
+                </li>
+            </ul>
+          </div>
+        </div>
+    </div>
+{% endblock %}

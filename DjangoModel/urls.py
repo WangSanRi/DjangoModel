@@ -1,6 +1,11 @@
-from django.urls import path
-from app01.view import depart,user,pretty,admin,account
+from django.urls import path,re_path
+from django.views.static import serve
+from django.conf import settings
+from app01.view import depart,user,pretty,admin,account,order,chart,file
 urlpatterns = [
+
+    re_path(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT},name='media'),
+
     # 部门管理
     path('depart/list/', depart.depart_list),
     path('depart/add/', depart.depart_add),
@@ -33,4 +38,23 @@ urlpatterns = [
 
     # 验证码
     path('img/code/',account.img_code),
+
+    # 订单管理
+    path('order/list/',order.order_list),
+    path('order/add/',order.order_add),
+    path('order/edit/',order.order_edit),
+    path('order/saveEdit/',order.order_saveEdit),
+    path('order/delete/',order.order_delete),
+
+    # 文件管理
+    path('file/list/',file.file_list),
+    path('file/upload/',file.file_upload),
+    path('file/<str:name>/delete/',file.file_delete),
+    path('file/<str:name>/download/', file.file_download),
+
+    # 数据统计
+    path('chart/list/',chart.chart_list),
+    path('chart/line/',chart.chart_line),
+    path('chart/bar/',chart.chart_bar),
+    path('chart/pie/',chart.chart_pie),
 ]
